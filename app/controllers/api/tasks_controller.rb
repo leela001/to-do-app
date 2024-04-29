@@ -3,8 +3,12 @@ class Api::TasksController < ApplicationController
     protect_from_forgery
 
     def create_task
-        @task = Task.save_task(params)
-        render :json => @task
+        begin
+            @task = Task.save_task(params)
+            render :json => @task
+        rescue Exception => e
+            render :json => {message: e.message}, status: :unprocessable_entity
+        end
     end
 
     def update_task

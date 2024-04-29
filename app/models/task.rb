@@ -2,11 +2,10 @@ class Task < ApplicationRecord
 
     validates :title, :status, presence: true
 
-
     def self.save_task(params)
         if params["id"].present?
             task = Task.find_by_id(params["id"])
-            raise Exception.new("In valid Task ID: #{params["id"]}")
+            raise Exception.new("In valid Task ID: #{params["id"]}") unless task.present?
         else
             if params["status"] == 'To Do'
                 total_tasks = Task.all.count
