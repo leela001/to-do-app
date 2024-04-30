@@ -24,7 +24,18 @@ class Api::TasksController < ApplicationController
 
 
     def index
-        @task = Task.all
-        render :json => @task
+        @tasks = Task.all
+        render :json => @tasks
+    end
+
+    def query
+        if params[:search].present?
+            @tasks = Task.where('title LIKE ?', "#{params[:search]}%")
+        elsif params[:filter].present? && params[:filter] != ""
+            @tasks = Task.where("status = ?", params[:filter])
+        else
+            @tasks = Task.all
+        end
+        render :json => @tasks
     end
 end

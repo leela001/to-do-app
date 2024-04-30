@@ -21,6 +21,8 @@ const HomePage = () => {
     })
     const [task, setTask] = useState([{}]);
     const [deleteMsg, setDeleteMsg] = useState("")
+    const [searchTerm, setSearchTerm] = useState("")
+    const [filter, setFilter] = useState("")
 
     useEffect(() => {
         getTasks(API_URL_GET)
@@ -117,10 +119,26 @@ const HomePage = () => {
         )
     }
 
+    const searchTasks = async() => {
+        const resp = await axios.get(`http://localhost:3000/api/tasks/query?search=${searchTerm}`)
+        setTask(resp?.data)
+    }
+
+    const filterTasks = async() => {
+        const resp = await axios.get(`http://localhost:3000/api/tasks/query?filter=${filter}`)
+        setTask(resp?.data)
+    }
+
+    const clearFilter = () => {
+        setFilter("");
+        setSearchTerm("");
+        getTasks(API_URL_GET);
+    }
+
     return (
         <div>
             <h2>TO DO Management</h2>
-            {errorMessage.message !== '' && <h3 style={{color: "red"}}>{errorMessage.message}</h3>}
+            {errorMessage.message !== '' && <p style={{color: "red"}}>{errorMessage.message}</p>}
             <div className="container">
                 <div className="form-container">
                     <form className='form' onSubmit={(e) => handleSubmit(e)}>
@@ -149,6 +167,27 @@ const HomePage = () => {
                 </div>
 
                 <div className="table-container">
+                    <div className="input-container">
+
+                        <div className="search-container">
+                            <label htmlFor="searchTitle">Search:</label>
+                            <input id="searchTitle" type="text" placeholder="Search by title" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                            <button onClick={searchTasks}>submit</button>
+                        </div>
+
+                        <div className="filter-container">
+                            <label htmlFor="statusFilter">Filter By Status:</label>
+                            <select id="statusFilter" value={filter} onChange={(e) => setFilter(e.target.value)}>
+                                <option value="">Select...</option>
+                                <option value="All">All</option>
+                                <option value="To Do">To Do</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Done">Done</option>
+                            </select>
+                            <button onClick={filterTasks}>Filter</button>
+                        </div>
+                        <button className="btn btn-sm btn-danger" onClick={() => clearFilter()}><Trash /></button>
+                    </div>
                     {deleteMsg !== '' && <h3 style={{color: "red"}}>{deleteMsg}</h3>}
                     <table className="table">
                         <thead>

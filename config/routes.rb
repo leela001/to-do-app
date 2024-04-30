@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :tasks do
       collection do
         post :create_task
+        get  :query
       end
 
       member do
