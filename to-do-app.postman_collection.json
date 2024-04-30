@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "0e377368-6bc5-45ef-850a-fde57c2477de",
+		"name": "to-do-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24139851"
+	},
+	"item": [
+		{
+			"name": "Create Task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Title1\",\n    \"description\": \"\",\n    \"status\": \"All\" // Values allowed ['All, To Do, In Progress, Done']\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/tasks/create_task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks",
+						"create_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 04ae8875-05d9-4be7-83d2-b68fc192a938",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Title 1\",\n    \"description\": \"one\",\n    \"status\": \"Done\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/tasks/6/update_task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks",
+						"6",
+						"update_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 04ae8875-05d9-4be7-83d2-b68fc192a938",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/tasks/16/destroy_task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks",
+						"16",
+						"destroy_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search By Title",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 04ae8875-05d9-4be7-83d2-b68fc192a938",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/tasks/query?search=Title2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks",
+						"query"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "Title2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter By Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 04ae8875-05d9-4be7-83d2-b68fc192a938",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/tasks/query?filter=In Progress",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks",
+						"query"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "In Progress"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
