@@ -51,6 +51,22 @@ To get started with the application, follow these steps:
 - Form Validation: Receive error messages if you try to submit the form without providing the necessary details (title and status).
 - Limitations: You cannot create a new "To Do" status task if existing "To Do" tasks are >= 50% of total tasks.
 
+## Screenshots
+- Initial
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/1227f120-147a-4916-a5b8-e7da41fc6e6c">
+- Fetching the results based on search
+<img width="1429" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/c28c1d88-405b-4c15-9d86-936b25f04454">
+- Fetching the results based on filter
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/af771884-9a76-41da-b55b-d21dfe9ef1e2">
+## Validation
+- If both Status and Title fields are blank
+<img width="1434" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/2c94858e-cb0d-4cc8-bde5-ec38cd30e1b0">
+- If the Title field is blank
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/a64e1440-9865-4f76-b03f-b89ff9969cea">
+- If TODo status count reaches the max limit
+<img width="1433" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/06c26a2d-c683-4be5-8813-3b6ebaba3ab5">
+- Editing the field
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/217b8bc5-0bfe-4cde-9cb9-adaddf4438c4">
 
-
-
+## Video Recording
+- [recording-2024-04-30-13-26-36.webm](https://github.com/leela001/to-do-app/assets/60808456/ab711697-9f19-4dc5-bab8-6f1fcef58ca4)
