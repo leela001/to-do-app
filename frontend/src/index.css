@@ -53,3 +53,32 @@ code {
 .logout-btn {
   margin-left: auto;
 }
+
+.home-container, .about-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.home-container h1, .about-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.home-container p, .about-container p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.link-tag {
+  text-decoration: none;
+}
+
+.link-tag button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

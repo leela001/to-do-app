@@ -8,6 +8,7 @@ class User < ApplicationRecord
     has_secure_password
     validates :password_confirmation, presence: true, confirmation: {message: "must match password"}
     validates :email, uniqueness: {message: "already taken!"}
+    has_many :tasks
 
 
 
