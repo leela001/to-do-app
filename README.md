@@ -37,6 +37,11 @@ To get started with the application, follow these steps:
 ## Features
 
 ## Task Management
+- JWT Authorization: Implemented JWT-based authorization to secure user authentication and task management functionalities.
+- Login and Signup Pages: Developed pages for user login and signup, enabling users to create and access their accounts.
+- Task Management: Enabled users to create, update, and delete tasks, with permissions enforced based on user authorization.
+- Task Filtering: Implemented filtering to display tasks belonging only to the logged-in user.
+- Session Management: Implemented automatic logout functionality to handle scenarios where users accidentally refresh the page during task creation.
 - Create Tasks: Use the provided form to create tasks by providing details such as title and status. Click the 'Create' button to add a new task.
 - Edit Tasks: Change the status of tasks using the pencil icon. Only the status can be modified during editing; other fields are disabled.
 - Delete Tasks: Remove tasks from the list using the trash icon.
@@ -46,13 +51,25 @@ To get started with the application, follow these steps:
 - Search: Utilize the search box located above the list of tasks to search for tasks based on their titles.
 - Filter: Filter tasks based on their status using the dropdown menu next to the search box.
 - Clear Filter: Clear the filter by clicking the trash icon next to the filter dropdown.
-## Validations
 
+## Validations
 - Form Validation: Receive error messages if you try to submit the form without providing the necessary details (title and status).
 - Limitations: You cannot create a new "To Do" status task if existing "To Do" tasks are >= 50% of total tasks.
 
+## Testing
+- Verified user authentication by logging in with valid credentials and accessing tasks.
+- Tested task creation, updating, and deletion, ensuring proper authorization checks are enforced.
+- Validated task filtering functionality to display only tasks belonging to the logged-in user.
+- Tested automatic logout feature by refreshing the page during task creation.
+
 ## Screenshots
 - Initial
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/732014a8-fe0a-4c30-974f-84669519bab2">
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/e85f2b6f-c7ef-4da3-a460-1d6c65f72ed8">
+
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/bb01a3a1-6123-4fd2-b303-11fcf02fd87f">
+<img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/ab5b6941-56bf-4b77-bc4f-1adeed59ecd6">
+ToDo Management
 <img width="1440" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/1227f120-147a-4916-a5b8-e7da41fc6e6c">
 - Fetching the results based on search
 <img width="1429" alt="image" src="https://github.com/leela001/to-do-app/assets/60808456/c28c1d88-405b-4c15-9d86-936b25f04454">
