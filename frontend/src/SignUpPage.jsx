@@ -6,6 +6,8 @@ const SignUpPage = () => {
 
     const [isUserCreated, setIsUserCreated] = useState(false)
 
+    const [signUppError, setSignUpError] = useState("");
+
     const [signUpData, setSignUpData] = useState({
         user: {
             user_name: "",
@@ -17,22 +19,28 @@ const SignUpPage = () => {
 
     const handleSignUp = async(e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3000/users/create_user', signUpData)
-        setSignUpData({
-            user: {
-                user_name: "",
-                email: "",
-                password: "",
-                password_confirmation: ""
-            }
-        })
-        setIsUserCreated(true)
+        setSignUpError("");
+        try {
+            await axios.post('http://localhost:3000/users/create_user', signUpData)
+            setSignUpData({
+                user: {
+                    user_name: "",
+                    email: "",
+                    password: "",
+                    password_confirmation: ""
+                }
+            })
+            setIsUserCreated(true)
+        } catch (error) {
+            setSignUpError(error.response.data.message)
+        }
     }
 
     return(
         <div className="signup-container">
             <h2>SignUp</h2>
             {isUserCreated && <p>User created successfully <span className="success-icon">&#x2705;</span></p>}
+            {signUppError !== "" && <p style={{color:'red'}}>{signUppError}</p>}
             <form className="form" action="submit">
                 <div className="form-group">
                     <label htmlFor="username">UserName</label>
