@@ -17,7 +17,7 @@ const HomePage = () => {
         status: ''
     })
 
-    const {userAuth} = useContext(AuthContext);
+    const {userAuth, setUserDeatils} = useContext(AuthContext);
 
     const [errorMessage, setErrorMessage] = useState({
         message: ""
@@ -27,11 +27,12 @@ const HomePage = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [filter, setFilter] = useState("")
 
-
     useEffect(() => {
         if(userAuth.is_user_login) {
             getTasks(API_URL_GET)
+            getUserDetails()
         }
+    // eslint-disable-next-line
     }, [userAuth.is_user_login])
 
     const handleInputChnage = (e, field_name) => {
@@ -80,6 +81,15 @@ const HomePage = () => {
         }
     }
 
+    const getUserDetails = async() => {
+        const resp = await axios.get("http://localhost:3000/user", {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
+        setUserDeatils({id: resp?.data?.id, name: resp?.data?.user_name, email: resp?.data?.user_email, tasks_count:resp?.data?.tasks_count});
+    }
     const[editingItem, setEditingItem] = useState({
         id: "",
         isEditing: false
@@ -107,7 +117,6 @@ const HomePage = () => {
             isEditing: false
         });
         getTasks(API_URL_GET);
-        
     }
 
     const handleDelete = async(item) => {
@@ -180,7 +189,8 @@ const HomePage = () => {
 
     return (
         <div>
-            <h2>TO DO Management</h2>
+            {userAuth.is_user_login &&  <h3 style={{padding: '25px', color: 'green'}}>Welcome @{userAuth?.user_details?.name}</h3> }
+            <h2 style={{padding: '20px'}}>TO DO Management</h2>
             {errorMessage.message !== '' && <p style={{color: "red"}}>{errorMessage.message}</p>}
             <div className="container">
                 <div className="form-container">

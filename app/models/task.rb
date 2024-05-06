@@ -8,10 +8,11 @@ class Task < ApplicationRecord
             raise Exception.new("In valid Task ID: #{params["id"]}") unless task.present?
         else
             if params["status"] == 'To Do'
+                debugger
                 # total_tasks = Task.all.count
                 total_tasks = current_user.tasks.count
-                to_dos_count = Task.where("status = 'To Do'").count
-                if to_dos_count.to_f/total_tasks.to_f * 100 >= 50
+                to_dos_count = Task.where("user_id = ? and status = 'To Do'", current_user.id).count
+                if to_dos_count > 0 && to_dos_count.to_f/total_tasks.to_f * 100 >= 50
                     raise Exception.new("Cannot create more 'To Do' tasks. Limit reached")
                 else
                     task = Task.new

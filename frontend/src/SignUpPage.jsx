@@ -32,7 +32,7 @@ const SignUpPage = () => {
     return(
         <div className="signup-container">
             <h2>SignUp</h2>
-            {isUserCreated && <p>User created successfully</p>}
+            {isUserCreated && <p>User created successfully <span className="success-icon">&#x2705;</span></p>}
             <form className="form" action="submit">
                 <div className="form-group">
                     <label htmlFor="username">UserName</label>
@@ -50,7 +50,7 @@ const SignUpPage = () => {
                     <label htmlFor="confirmpassword">Confirm Password</label>
                     <input id="confirmpassword" type="password" value={signUpData.user.password_confirmation} onChange={(e) => {setSignUpData({...signUpData, user: {...signUpData.user, password_confirmation: e.target.value}})}} />
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSignUp}>SignUp</button>
+                {!isUserCreated && <button type="submit" className="btn btn-primary" onClick={handleSignUp}>SignUp</button>}
             </form>
         </div>
     )

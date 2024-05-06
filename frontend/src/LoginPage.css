@@ -94,3 +94,8 @@ input[type="password"],input[type="text"] {
     cursor: pointer;
     transition: background-color 0.3s;
   }
+
+  .success-icon {
+    font-size: 24px;
+    color: green;
+  }

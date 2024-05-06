@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   end
 
   post '/login', :to =>'sessions#create'
+  get '/user', :to => 'users#get_user_details'
   get 'api/tasks', :to =>'tasks#index'
 end
