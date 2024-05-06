@@ -13,6 +13,8 @@ const Login = () => {
         password: ""
     });
 
+    const [loginErrorMessage, setLoginErrorMessage] = useState("");
+
     const {login} = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -21,11 +23,16 @@ const Login = () => {
         e.preventDefault();
         sessionStorage.getItem('token')
         sessionStorage.setItem("token", user.email)
-        const resp = await axios.post('http://localhost:3000/login', user)
-        if (resp.status === 200) {
-            navigate("/todo")
-            login();
-            sessionStorage.setItem('token', resp.data.token)
+        setLoginErrorMessage("");
+        try {
+            const resp = await axios.post('http://localhost:3000/login', user)
+            if (resp.status === 200) {
+                navigate("/todo")
+                login();
+                sessionStorage.setItem('token', resp.data.token)
+            }
+        } catch (error) {
+            setLoginErrorMessage(error.response.data.error);
         }
     }
 
@@ -34,6 +41,7 @@ const Login = () => {
         <div className="container">
             <div className="login-container">
                 <h2>Login</h2>
+                {loginErrorMessage !== "" && <p style={{color: 'red'}}>{loginErrorMessage}</p>}
                 <form className="form" action="submit">
                     <div className="form-group">
                         <label htmlFor="username">Email</label>
