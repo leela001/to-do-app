@@ -8,7 +8,6 @@ class Task < ApplicationRecord
             raise Exception.new("In valid Task ID: #{params["id"]}") unless task.present?
         else
             if params["status"] == 'To Do'
-                debugger
                 # total_tasks = Task.all.count
                 total_tasks = current_user.tasks.count
                 to_dos_count = Task.where("user_id = ? and status = 'To Do'", current_user.id).count

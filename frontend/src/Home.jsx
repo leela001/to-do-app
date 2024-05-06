@@ -9,7 +9,6 @@ const Home = () => {
 
     return(
       <div>
-
         {userAuth.is_user_login && <h3 style={{padding: '25px', color: 'green'}}>Welcome @ {userAuth?.user_details?.name}</h3>}
         <div className="home-container">
           <h1>Welcome to Your To-Do Management List App</h1>
