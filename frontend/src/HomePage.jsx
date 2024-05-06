@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import './HomePage.css'
 import axios from 'axios';
 import { Trash, Pencil } from 'react-bootstrap-icons'; // Import Bootstrap icons
+import { AuthContext } from "./AuthContext";
 
 
 const API_URL_GET = 'http://localhost:3000/api/tasks'
@@ -16,6 +17,8 @@ const HomePage = () => {
         status: ''
     })
 
+    const {userAuth} = useContext(AuthContext);
+
     const [errorMessage, setErrorMessage] = useState({
         message: ""
     })
@@ -24,9 +27,12 @@ const HomePage = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [filter, setFilter] = useState("")
 
+
     useEffect(() => {
-        getTasks(API_URL_GET)
-    }, [])
+        if(userAuth.is_user_login) {
+            getTasks(API_URL_GET)
+        }
+    }, [userAuth.is_user_login])
 
     const handleInputChnage = (e, field_name) => {
         if (field_name === "title") {
@@ -46,9 +52,14 @@ const HomePage = () => {
             ...errorMessage, status: "", message: ""
         }))
         try {
-            await axios.post('http://localhost:3000/api/tasks/create_task', formData)
-            getTasks(API_URL_GET)
-            setFormData({title: '', description: '', status: ''})
+            await axios.post('http://localhost:3000/api/tasks/create_task', formData, {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                    'Content-Type': "application/json"
+                }
+            });
+            getTasks(API_URL_GET);
+            setFormData({title: '', description: '', status: ''});
         } catch(ex) {
             setErrorMessage(errorMessage => ({
                 ...errorMessage, status: ex.response.status, message: ex.response.data.message
@@ -58,7 +69,12 @@ const HomePage = () => {
 
 
     const getTasks = async(API_URL_GET) => {
-        const response = await axios.get(API_URL_GET)
+        const response = await axios.get(API_URL_GET, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
         if(response.status === 200) {
             setTask(response?.data);
         }
@@ -79,17 +95,28 @@ const HomePage = () => {
 
     const handleEditableChanges = async(e) => {
         e.preventDefault();
-        await axios.put("http://localhost:3000/api/tasks/" + editingItem.id + "/update_task", formData)
-        setFormData({title: '', description: '', status: ''})
+        await axios.put("http://localhost:3000/api/tasks/" + editingItem.id + "/update_task",formData, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
+        setFormData({title: '', description: '', status: ''});
         setEditingItem({
             id: '',
             isEditing: false
         });
         getTasks(API_URL_GET);
+        
     }
 
     const handleDelete = async(item) => {
-        const resp = await axios.delete("http://localhost:3000/api/tasks/" + item.id + "/destroy_task", item)
+        const resp = await axios.delete("http://localhost:3000/api/tasks/" + item.id + "/destroy_task", {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
         setDeleteMsg(resp.data.message + "-" + resp.data.task_id)
         setTimeout(() => {
             getTasks(API_URL_GET)
@@ -120,19 +147,35 @@ const HomePage = () => {
     }
 
     const searchTasks = async() => {
-        const resp = await axios.get(`http://localhost:3000/api/tasks/query?search=${searchTerm}`)
-        setTask(resp?.data)
+        const resp = await axios.get(`http://localhost:3000/api/tasks/query?search=${searchTerm}`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
+        setTask(resp?.data);
     }
 
     const filterTasks = async() => {
-        const resp = await axios.get(`http://localhost:3000/api/tasks/query?filter=${filter}`)
-        setTask(resp?.data)
+        const resp = await axios.get(`http://localhost:3000/api/tasks/query?filter=${filter}`, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Content-Type': "application/json"
+            }
+        });
+        setTask(resp?.data);
     }
 
     const clearFilter = () => {
         setFilter("");
         setSearchTerm("");
         getTasks(API_URL_GET);
+    }
+
+    if (!userAuth.is_user_login) {
+        return(
+            <h2 style={{color: 'red'}}>User Not logged in</h2>
+        )
     }
 
     return (

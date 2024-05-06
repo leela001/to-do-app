@@ -15,5 +15,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users do
+    collection do
+      post :create_user
+    end
+  end
+
+  post '/login', :to =>'sessions#create'
   get 'api/tasks', :to =>'tasks#index'
 end

@@ -4,7 +4,7 @@ class Api::TasksController < ApplicationController
 
     def create_task
         begin
-            @task = Task.save_task(params)
+            @task = Task.save_task(params, @current_user)
             render :json => @task
         rescue Exception => e
             render :json => {message: e.message}, status: :unprocessable_entity
@@ -12,7 +12,7 @@ class Api::TasksController < ApplicationController
     end
 
     def update_task
-        @task = Task.save_task(params)
+        @task = Task.save_task(params, @current_user)
         render :json => @task
     end
 
@@ -24,17 +24,17 @@ class Api::TasksController < ApplicationController
 
 
     def index
-        @tasks = Task.all
+        @tasks = @current_user.tasks
         render :json => @tasks
     end
 
     def query
         if params[:search].present?
-            @tasks = Task.where('title LIKE ?', "#{params[:search]}%")
+            @tasks = Task.where('user_id = ? and title LIKE ?', @current_user.id, "#{params[:search]}%")
         elsif params[:filter].present? && params[:filter] != ""
-            @tasks = Task.where("status = ?", params[:filter])
+            @tasks = Task.where("user_id = ? and status = ?", @current_user.id, params[:filter])
         else
-            @tasks = Task.all
+            @tasks = @current_user.tasks
         end
         render :json => @tasks
     end
